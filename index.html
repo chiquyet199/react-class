@@ -1,0 +1,44 @@
+<html>
+  <body>
+    <input id="score" type="number" />
+    <button id="action" onclick="onButtonClick()">Action</button>
+
+    <script type="text/javascript">
+      function getStudentRankFromScore(score) {
+        const MIN_SCORE = 0
+        const MAX_SCORE = 10
+        const BAD_SCORE = 5
+        const AVERAGE_SCORE = 6.5
+        const FAIRY_GOOD_SCORE = 8
+        const GOOD_SCORE = 9
+        let studentRank
+
+        switch (true) {
+          case score < BAD_SCORE:
+            studentRank = 'o lai lop'
+          case score >= BAD_SCORE && score < AVERAGE_SCORE:
+            studentRank = 'trung binh'
+          case score >= AVERAGE_SCORE && score < FAIRY_GOOD_SCORE:
+            studentRank = 'kha'
+          case score >= FAIRY_GOOD_SCORE && score < GOOD_SCORE:
+            studentRank = 'gioi'
+          case score >= GOOD_SCORE && score < MAX_SCORE:
+            studentRank = 'xuat sac'
+          default:
+            studentRank = null
+        }
+
+        return studentRank
+      }
+
+      function onButtonClick() {
+        let score = document.getElementById('score').value
+        score = Number(score) // <=> +score || score * 1
+        const rank = getStudentRankFromScore(score)
+        alert(rank || 'diem khong hop le')
+      }
+
+      
+    </script>
+  </body>
+</html>

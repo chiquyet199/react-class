@@ -1,0 +1,67 @@
+<html>
+  <style>
+    p,
+    h3 {
+      padding: 0;
+      margin: 0;
+    }
+    .product-list {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      align-items: center;
+    }
+
+    .product {
+      width: 200px;
+      height: 300px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product .img {
+      width: 180px;
+      height: 180px;
+    }
+
+    .product .title {
+      font-size: medium;
+      padding: 5px 0;
+    }
+
+    .product .price .new {
+      color: red;
+      font-size: 18px;
+    }
+
+    .product .price .old {
+      color: gray;
+      text-decoration: line-through;
+    }
+
+    .product .promotion {
+      font-size: small;
+    }
+
+    /*Make button align at the bottom*/
+
+    .cart {
+    }
+
+    .cart-item {
+      border: 1px solid;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+  </style>
+  <body>
+    <ul class="product-list"></ul>
+
+    <div class="cart">
+      <h1>Your cart</h1>
+    </div>
+    <h3>Total: <span class="total">0</span></h3>
+    <script type="text/javascript" src="./home.js">
+    </script>
+  </body>
+</html>
