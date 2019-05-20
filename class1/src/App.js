@@ -36,10 +36,34 @@ class App extends React.Component {
     ],
   }
 
-  onProductClick = product => {
-    const newShoppingCart = [...this.state.shoppingCart, product]
-    const newState = {...this.state, shoppingCart: newShoppingCart}
-    this.setState(newState)
+  onAddProductClick = product => {
+    const state = this.state
+    const {products, shoppingCart} = state
+    const productById = id => product => product.id === id
+    const productToAdd = products.find(productById(product.id))
+    const sameProductInCart = shoppingCart.find(
+      productById(product.id)
+    )
+    const newShoppingCart = [...shoppingCart]
+    if (sameProductInCart) {
+      sameProductInCart.quantity++
+    } else {
+      productToAdd.quantity = 1
+      newShoppingCart.push(productToAdd)
+    }
+    this.setState({...state, shoppingCart: newShoppingCart})
+  }
+
+  changeQuantity = (productId, quantity) => {
+    const state = this.state
+    const byId = productId => item => item.id === productId
+    const newShoppingCart = [...state.shoppingCart]
+    const cartItemIdx = newShoppingCart.findIndex(byId(productId))
+    newShoppingCart[cartItemIdx] = {
+      ...newShoppingCart[cartItemIdx],
+      quantity: quantity,
+    }
+    this.setState({...state, shoppingCart: newShoppingCart})
   }
 
   onNavClick = activePage => {
@@ -47,23 +71,59 @@ class App extends React.Component {
     this.setState(newState)
   }
 
+  checkout = () => {
+    const state = this.state
+    const {shoppingCart, successShoopingCart} = state
+    const newShoppingCart = []
+    const newSuccessShoopingCart =
+      successShoopingCart.length > 0
+        ? [...successShoopingCart, shoppingCart]
+        : [shoppingCart]
+    const newAppState = {
+      ...state,
+      shoppingCart: newShoppingCart,
+      successShoopingCart: newSuccessShoopingCart,
+    }
+    this.setState(newAppState)
+  }
+
+  onDeleteCartItem = item => {
+    const state = this.state
+    const {shoppingCart} = state
+    const withoutDeletedItem = i => i.id !== item.id
+    const newShoppingCart = shoppingCart.filter(withoutDeletedItem)
+    this.setState({...state, shoppingCart: newShoppingCart})
+  }
+
   render() {
     const pageMapper = {
       home: <Home />,
       about: <About />,
-      checkout: <Checkout />,
+      checkout: (
+        <Checkout
+          items={this.state.shoppingCart}
+          checkout={this.checkout}
+          onDelete={this.onDeleteCartItem}
+          changeQuantity={this.changeQuantity}
+        />
+      ),
       products: (
         <Products
           products={this.state.products}
-          onProductClick={this.onProductClick}
+          onProductClick={this.onAddProductClick}
         />
       ),
     }
     return (
       <div className="App">
-        <NavBar onClick={this.onNavClick} cartLength={this.state.shoppingCart.length} />
+        <NavBar
+          onClick={this.onNavClick}
+          cartLength={this.state.shoppingCart.length}
+        />
         <div style={{padding: 50}}>
-          {pageMapper[this.state.activePage] || <h2>PAGE NOT FOUND</h2>}
+          {pageMapper[this.state.activePage] || (
+            <h2>PAGE NOT FOUND</h2>
+          )}
         </div>
       </div>
     )
