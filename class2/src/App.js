@@ -4,6 +4,7 @@ import Products from './pages/Products'
 import Home from './pages/Home'
 import About from './pages/About'
 import Checkout from './pages/Checkout'
+import AppContext from './context'
 import './App.css'
 
 class App extends React.Component {
@@ -36,7 +37,7 @@ class App extends React.Component {
     ],
   }
 
-  onAddProductClick = product => {
+  addProduct = product => {
     const state = this.state
     const {products, shoppingCart} = state
     const productById = id => product => product.id === id
@@ -54,7 +55,7 @@ class App extends React.Component {
     this.setState({...state, shoppingCart: newShoppingCart})
   }
 
-  changeQuantity = (productId, quantity) => {
+  changeCartItemQuantity = (productId, quantity) => {
     const state = this.state
     const byId = productId => item => item.id === productId
     const newShoppingCart = [...state.shoppingCart]
@@ -66,7 +67,7 @@ class App extends React.Component {
     this.setState({...state, shoppingCart: newShoppingCart})
   }
 
-  onNavClick = activePage => {
+  navigate = activePage => {
     const newState = {...this.state, activePage}
     this.setState(newState)
   }
@@ -87,7 +88,7 @@ class App extends React.Component {
     this.setState(newAppState)
   }
 
-  onDeleteCartItem = item => {
+  removeCartItem = item => {
     const state = this.state
     const {shoppingCart} = state
     const withoutDeletedItem = i => i.id !== item.id
@@ -99,33 +100,32 @@ class App extends React.Component {
     const pageMapper = {
       home: <Home />,
       about: <About />,
-      checkout: (
-        <Checkout
-          items={this.state.shoppingCart}
-          checkout={this.checkout}
-          onDelete={this.onDeleteCartItem}
-          changeQuantity={this.changeQuantity}
-        />
-      ),
-      products: (
-        <Products
-          products={this.state.products}
-          onProductClick={this.onAddProductClick}
-        />
-      ),
+      checkout: <Checkout />,
+      products: <Products />,
     }
+
+    const context = {
+      state: this.state,
+      actions: {
+        addProduct: this.addProduct,
+        navigate: this.navigate,
+        checkout: this.checkout,
+        removeCartItem: this.removeCartItem,
+        changeCartItemQuantity: this.changeCartItemQuantity,
+      },
+    }
+
     return (
-      <div className="App">
-        <NavBar
-          onClick={this.onNavClick}
-          cartLength={this.state.shoppingCart.length}
-        />
-        <div style={{padding: 50}}>
-          {pageMapper[this.state.activePage] || (
-            <h2>PAGE NOT FOUND</h2>
-          )}
+      <AppContext.Provider value={context}>
+        <div className="App">
+          <NavBar />
+          <div style={{padding: 50}}>
+            {pageMapper[this.state.activePage] || (
+              <h2>PAGE NOT FOUND</h2>
+            )}
+          </div>
         </div>
-      </div>
+      </AppContext.Provider>
     )
   }
 }
