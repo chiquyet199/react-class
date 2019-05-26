@@ -75,11 +75,10 @@ export default function appState(state = initialState, action) {
         byId(action.payload.id)
       )
       newShoppingCart1[cartItemIdx] = {
-        ...newShoppingCart[cartItemIdx],
+        ...newShoppingCart1[cartItemIdx],
         quantity: action.payload.quantity,
       }
-      this.setState({...state, shoppingCart: newShoppingCart})
-      return state - 1
+      return {...state, shoppingCart: newShoppingCart1}
     case NAVIGATE:
       return {...state, activePage: action.payload}
     default:
