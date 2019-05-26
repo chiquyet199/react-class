@@ -1,17 +1,15 @@
-import React, {useContext} from 'react'
-import AppContext from '../../context'
+import React  from 'react'
+import actions from '../../actions'
+import {connect} from 'react-redux'
 import './index.css'
 
-function NavBar() {
-  const context = useContext(AppContext)
-  const {shoppingCart} = context.state
-  const {navigate} = context.actions
+function NavBar(props) {
   return (
     <nav>
       <ul>
         <li
           onClick={() => {
-            navigate('home')
+            props.chuyentrang('home')
           }}
           className="nav-home"
         >
@@ -19,7 +17,7 @@ function NavBar() {
         </li>
         <li
           onClick={() => {
-            navigate('products')
+            props.chuyentrang('products')
           }}
           className="nav-products"
         >
@@ -27,7 +25,7 @@ function NavBar() {
         </li>
         <li
           onClick={() => {
-            navigate('about')
+            props.chuyentrang('about')
           }}
           className="nav-about"
         >
@@ -36,14 +34,32 @@ function NavBar() {
       </ul>
       <span
         onClick={() => {
-          navigate('checkout')
+          props.chuyentrang('checkout')
         }}
         className="shopping-cart"
       >
-        Cart ({shoppingCart.length})
+        Cart ({props.shoppingCartLength})
       </span>
     </nav>
   )
 }
 
-export default NavBar
+
+// Khi muốn xài state
+const mapStateToProps = state => {
+  return {
+    shoppingCartLength: state.shoppingCart.length,
+  }
+}
+
+// Khi muốn xài actions
+const mapDispatchToProps = dispatch => {
+  return {
+    chuyentrang: page => {
+      dispatch(actions.navigate(page))
+    },
+  }
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(NavBar)
