@@ -1,4 +1,5 @@
-import React  from 'react'
+import React from 'react'
+import {Link} from 'react-router-dom'
 import actions from '../../actions'
 import {connect} from 'react-redux'
 import './index.css'
@@ -7,43 +8,24 @@ function NavBar(props) {
   return (
     <nav>
       <ul>
-        <li
-          onClick={() => {
-            props.chuyentrang('home')
-          }}
-          className="nav-home"
-        >
-          Home
+        <li className="nav-home">
+          <Link to="/">Home</Link>
         </li>
-        <li
-          onClick={() => {
-            props.chuyentrang('products')
-          }}
-          className="nav-products"
-        >
-          Products
+        <li className="nav-products">
+          <Link to="/products">Products</Link>
         </li>
-        <li
-          onClick={() => {
-            props.chuyentrang('about')
-          }}
-          className="nav-about"
-        >
-          About
+        <li className="nav-about">
+          <Link to="/about">About</Link>
         </li>
       </ul>
-      <span
-        onClick={() => {
-          props.chuyentrang('checkout')
-        }}
-        className="shopping-cart"
-      >
-        Cart ({props.shoppingCartLength})
-      </span>
+      <Link to="/checkout">
+        <span className="shopping-cart">
+          Cart ({props.shoppingCartLength})
+        </span>
+      </Link>
     </nav>
   )
 }
-
 
 // Khi muốn xài state
 const mapStateToProps = state => {
@@ -61,5 +43,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-
-export default connect(mapStateToProps,mapDispatchToProps)(NavBar)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NavBar)

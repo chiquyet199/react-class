@@ -1,4 +1,6 @@
 import React from 'react'
+import {BrowserRouter as Router, Route} from 'react-router-dom'
+
 import NavBar from './components/NavBar'
 import Products from './pages/Products'
 import Home from './pages/Home'
@@ -97,13 +99,6 @@ class App extends React.Component {
   }
 
   render() {
-    const pageMapper = {
-      home: <Home />,
-      about: <About />,
-      checkout: <Checkout />,
-      products: <Products />,
-    }
-
     const context = {
       state: this.state,
       actions: {
@@ -117,14 +112,15 @@ class App extends React.Component {
 
     return (
       <AppContext.Provider value={context}>
-        <div className="App">
-          <NavBar />
-          <div style={{padding: 50}}>
-            {pageMapper[this.state.activePage] || (
-              <h2>PAGE NOT FOUND</h2>
-            )}
+        <Router>
+          <div className="App">
+            <NavBar />
+            <Route path="/home" component={Home} />
+            <Route path="/about" component={About} />
+            <Route path="/products" component={Products} />
+            <Route path="/checkout" component={Checkout} />
           </div>
-        </div>
+        </Router>
       </AppContext.Provider>
     )
   }

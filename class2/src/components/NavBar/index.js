@@ -1,4 +1,5 @@
 import React, {useContext} from 'react'
+import {Link} from 'react-router-dom'
 import AppContext from '../../context'
 import './index.css'
 
@@ -9,39 +10,21 @@ function NavBar() {
   return (
     <nav>
       <ul>
-        <li
-          onClick={() => {
-            navigate('home')
-          }}
-          className="nav-home"
-        >
-          Home
+        <li className="nav-home">
+          <Link to="/home">Home</Link>
         </li>
-        <li
-          onClick={() => {
-            navigate('products')
-          }}
-          className="nav-products"
-        >
-          Products
+        <li className="nav-products">
+          <Link to="/products">Products</Link>
         </li>
-        <li
-          onClick={() => {
-            navigate('about')
-          }}
-          className="nav-about"
-        >
-          About
+        <li className="nav-about">
+          <Link to="/about">About</Link>
         </li>
       </ul>
-      <span
-        onClick={() => {
-          navigate('checkout')
-        }}
-        className="shopping-cart"
-      >
-        Cart ({shoppingCart.length})
-      </span>
+      <Link to="/checkout">
+        <span className="shopping-cart">
+          Cart ({shoppingCart.length})
+        </span>
+      </Link>
     </nav>
   )
 }
