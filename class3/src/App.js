@@ -1,5 +1,10 @@
 import React from 'react'
-import {BrowserRouter as Router, Route} from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from 'react-router-dom'
 import NavBar from './components/NavBar'
 import Products from './pages/Products'
 import Home from './pages/Home'
@@ -15,10 +20,13 @@ class App extends React.Component {
         <Router>
           <div>
             <NavBar />
-            <Route exact path="/" component={Home} />
-            <Route path="/about" component={About} />
-            <Route path="/products" component={Products} />
-            <Route path="/checkout" component={Checkout} />
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route path="/about" component={About} />
+              <Route path="/products" component={Products} />
+              <Route path="/checkout" component={Checkout} />
+              <Redirect to="/" />
+            </Switch>
           </div>
         </Router>
       </div>
