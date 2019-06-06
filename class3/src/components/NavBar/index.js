@@ -1,5 +1,4 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
 import actions from '../../actions'
 import {connect} from 'react-redux'
 import './index.css'
@@ -8,27 +7,46 @@ function NavBar(props) {
   return (
     <nav>
       <ul>
-        <li className="nav-home">
-          <Link to="/">Home</Link>
+        <li
+          onClick={() => {
+            props.chuyentrang('home')
+          }}
+          className="nav-home"
+        >
+          Home
         </li>
-        <li className="nav-products">
-          <Link to="/products">Products</Link>
+        <li
+          onClick={() => {
+            props.chuyentrang('products')
+          }}
+          className="nav-products"
+        >
+          Products
         </li>
-        <li className="nav-about">
-          <Link to="/about">About</Link>
+        <li
+          onClick={() => {
+            props.chuyentrang('about')
+          }}
+          className="nav-about"
+        >
+          About
         </li>
       </ul>
-      <Link to="/checkout">
-        <span className="shopping-cart">
-          Cart ({props.shoppingCartLength})
-        </span>
-      </Link>
+      <span
+        onClick={() => {
+          props.chuyentrang('checkout')
+        }}
+        className="shopping-cart"
+      >
+        Cart ({props.shoppingCartLength})
+      </span>
     </nav>
   )
 }
 
 // Khi muốn xài state
 const mapStateToProps = state => {
+  console.log(state)
   return {
     shoppingCartLength: state.shoppingCart.length,
   }

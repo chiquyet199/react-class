@@ -109,18 +109,24 @@ class App extends React.Component {
         changeCartItemQuantity: this.changeCartItemQuantity,
       },
     }
+    
+    const pageMapper = {
+      home: <Home />,
+      about: <About />,
+      checkout: <Checkout />,
+      products: <Products />,
+    }
 
     return (
       <AppContext.Provider value={context}>
-        <Router>
-          <div className="App">
-            <NavBar />
-            <Route path="/home" component={Home} />
-            <Route path="/about" component={About} />
-            <Route path="/products" component={Products} />
-            <Route path="/checkout" component={Checkout} />
+        <div className="App">
+          <NavBar />
+          <div style={{padding: 50}}>
+            {pageMapper[this.state.activePage] || (
+              <h2>PAGE NOT FOUND</h2>
+            )}
           </div>
-        </Router>
+        </div>
       </AppContext.Provider>
     )
   }

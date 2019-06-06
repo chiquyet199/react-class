@@ -1,10 +1,4 @@
 import React from 'react'
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from 'react-router-dom'
 import NavBar from './components/NavBar'
 import Products from './pages/Products'
 import Home from './pages/Home'
@@ -15,20 +9,20 @@ import './App.css'
 
 class App extends React.Component {
   render() {
+    const pageMapper = {
+      home: <Home />,
+      about: <About />,
+      checkout: <Checkout />,
+      products: <Products />,
+    }
     return (
       <div className="App">
-        <Router>
-          <div>
-            <NavBar />
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route path="/about" component={About} />
-              <Route path="/products" component={Products} />
-              <Route path="/checkout" component={Checkout} />
-              <Redirect to="/" />
-            </Switch>
-          </div>
-        </Router>
+        <NavBar />
+        <div style={{padding: 50}}>
+          {pageMapper[this.props.activePage] || (
+            <h2>PAGE NOT FOUND</h2>
+          )}
+        </div>
       </div>
     )
   }
