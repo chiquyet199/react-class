@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 import NavBar from './components/NavBar'
 import ToggleButton from './components/ToggleButton'
+import Rating from './components/Rating'
 import Products from './pages/Products'
 import Home from './pages/Home'
 import About from './pages/About'
@@ -34,7 +35,7 @@ class App extends React.Component {
                 width: 200,
               }}
             >
-              <ToggleButton />
+              <Rating rate={2} />
             </div>
             <Switch>
               <Route exact path="/" component={Home} />
