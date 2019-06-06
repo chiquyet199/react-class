@@ -6,6 +6,7 @@ import {
   Redirect,
 } from 'react-router-dom'
 import NavBar from './components/NavBar'
+import ToggleButton from './components/ToggleButton'
 import Products from './pages/Products'
 import Home from './pages/Home'
 import About from './pages/About'
@@ -15,7 +16,7 @@ import actions from './actions'
 import './App.css'
 
 class App extends React.Component {
-  componentDidMount(){
+  componentDidMount() {
     this.props.getProducts()
   }
   render() {
@@ -24,6 +25,17 @@ class App extends React.Component {
         <Router>
           <div>
             <NavBar />
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: 200,
+                width: 200,
+              }}
+            >
+              <ToggleButton />
+            </div>
             <Switch>
               <Route exact path="/" component={Home} />
               <Route path="/about" component={About} />
@@ -53,4 +65,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App)
