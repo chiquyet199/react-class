@@ -1,7 +1,8 @@
-import {createStore} from 'redux'
+import {createStore, applyMiddleware} from 'redux'
+import thunk from 'redux-thunk'
 import appState from './reducers'
 
-const store = createStore(appState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+const store = createStore(appState, applyMiddleware(thunk))
 
 store.subscribe((arg)=>{
   console.log('Action called', store.getState())
