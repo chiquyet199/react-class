@@ -20,14 +20,24 @@ body {
 #root {
   flex: 1;
 }
+.wrapper{
+  display: flex;
+  flex-direction: column;
+}
 .container{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
+}
+.content{
   display: flex;
   flex-direction: row;
 }
 .container main{
   flex:4;
-  max-height: calc(100vh - 80px);
-  overflow-y: auto;
   padding-top: 30px;
 }
 .container aside{flex:1}
+
