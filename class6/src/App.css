@@ -1,0 +1,33 @@
+html,
+body,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
+li {
+  list-style: none;
+}
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  display: flex;
+  justify-content: center;
+}
+#root {
+  flex: 1;
+}
+.container{
+  display: flex;
+  flex-direction: row;
+}
+.container main{
+  flex:4;
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
+  padding-top: 30px;
+}
+.container aside{flex:1}
