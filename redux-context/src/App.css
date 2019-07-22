@@ -1,0 +1,22 @@
+html,
+body,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
+li {
+  list-style: none;
+}
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  display: flex;
+  justify-content: center;
+}
+#root {
+  flex: 1;
+}
