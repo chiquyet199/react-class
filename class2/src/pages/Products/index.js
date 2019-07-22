@@ -16,6 +16,7 @@ function Products() {
 }
 
 function ProductsHook() {
+  console.log('render product')
   const context = useContext(AppContext)
   return (
     <ProductList
@@ -38,4 +39,4 @@ class ProductsClass extends React.Component{
   }
 }
 
-export default Products
+export default ProductsHook

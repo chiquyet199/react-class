@@ -47,6 +47,7 @@ function Checkout() {
 class CheckoutClass extends React.Component {
   static contextType = AppContext
   render(){
+    console.log('render checkout')
     const context = this.context
     const {shoppingCart} = context.state
     const {
