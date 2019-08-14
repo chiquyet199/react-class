@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 import NavBar from './components/NavBar'
 import Products from './pages/Products'
@@ -8,8 +8,8 @@ import Checkout from './pages/Checkout'
 import AppContext from './context'
 import './App.css'
 
-class App extends React.Component {
-  state = {
+function App() {
+  const [state, setState] = useState({
     activePage: 'about',
     productDetail: null,
     shoppingCart: [],
@@ -36,10 +36,9 @@ class App extends React.Component {
         price: 800,
       },
     ],
-  }
+  })
 
-  addProduct = product => {
-    const state = this.state
+  const addProduct = product => {
     const {products, shoppingCart} = state
     const productById = id => product => product.id === id
     const productToAdd = products.find(productById(product.id))
@@ -53,11 +52,10 @@ class App extends React.Component {
       productToAdd.quantity = 1
       newShoppingCart.push(productToAdd)
     }
-    this.setState({...state, shoppingCart: newShoppingCart})
+    setState({...state, shoppingCart: newShoppingCart})
   }
 
-  changeCartItemQuantity = (productId, quantity) => {
-    const state = this.state
+  const changeCartItemQuantity = (productId, quantity) => {
     const byId = productId => item => item.id === productId
     const newShoppingCart = [...state.shoppingCart]
     const cartItemIdx = newShoppingCart.findIndex(byId(productId))
@@ -65,16 +63,15 @@ class App extends React.Component {
       ...newShoppingCart[cartItemIdx],
       quantity: quantity,
     }
-    this.setState({...state, shoppingCart: newShoppingCart})
+    setState({...state, shoppingCart: newShoppingCart})
   }
 
-  navigate = activePage => {
-    const newState = {...this.state, activePage}
-    this.setState(newState)
+  const navigate = activePage => {
+    const newState = {...state, activePage}
+    setState(newState)
   }
 
-  checkout = () => {
-    const state = this.state
+  const checkout = () => {
     const {shoppingCart, successShoopingCart} = state
     const newShoppingCart = []
     const newSuccessShoopingCart =
@@ -86,49 +83,44 @@ class App extends React.Component {
       shoppingCart: newShoppingCart,
       successShoopingCart: newSuccessShoopingCart,
     }
-    this.setState(newAppState)
+    setState(newAppState)
   }
 
-  removeCartItem = item => {
-    const state = this.state
+  const removeCartItem = item => {
     const {shoppingCart} = state
     const withoutDeletedItem = i => i.id !== item.id
     const newShoppingCart = shoppingCart.filter(withoutDeletedItem)
-    this.setState({...state, shoppingCart: newShoppingCart})
+    setState({...state, shoppingCart: newShoppingCart})
   }
 
-  render() {
-    const context = {
-      state: this.state,
-      actions: {
-        addProduct: this.addProduct,
-        navigate: this.navigate,
-        checkout: this.checkout,
-        removeCartItem: this.removeCartItem,
-        changeCartItemQuantity: this.changeCartItemQuantity,
-      },
-    }
-    
-    const pageMapper = {
-      home: <Home />,
-      about: <About />,
-      checkout: <Checkout />,
-      products: <Products />,
-    }
+  const context = {
+    state: state,
+    actions: {
+      addProduct: addProduct,
+      navigate: navigate,
+      checkout: checkout,
+      removeCartItem: removeCartItem,
+      changeCartItemQuantity: changeCartItemQuantity,
+    },
+  }
 
-    return (
-      <AppContext.Provider value={context}>
-        <div className="App">
-          <NavBar />
-          <div style={{padding: 50}}>
-            {pageMapper[this.state.activePage] || (
-              <h2>PAGE NOT FOUND</h2>
-            )}
-          </div>
+  const pageMapper = {
+    home: <Home />,
+    about: <About />,
+    checkout: <Checkout />,
+    products: <Products />,
+  }
+
+  return (
+    <AppContext.Provider value={context}>
+      <div className="App">
+        <NavBar />
+        <div style={{padding: 50}}>
+          {pageMapper[state.activePage] || <h2>PAGE NOT FOUND</h2>}
         </div>
-      </AppContext.Provider>
-    )
-  }
+      </div>
+    </AppContext.Provider>
+  )
 }
 
 export default App
